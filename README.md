@@ -11,8 +11,9 @@ in order to get the signature first, the usual way is through `keytool`.
 keytool -list -v -keystore ~/project/xxx/release.jks
 ```
 But the results obtained cannot be used directly
-
-![keytool](images/keytool.png)
+<div align="center">
+<img src="images/keytool.png" align="center"/>
+</div>
 
 You need remove the ':' to get the string like  `F386D22D477FAD53853D3321FA6DAEE8`.
 
@@ -28,11 +29,11 @@ But the WeChat team did not mean to provide this tool
 read all Apps on your phone first
 you can filter the special application by type the keyword on the top of app list.
 
-![app_list](images/app_list.png)
-
-![target_app](images/target_app.png)
-
-![signature_info](images/signature_info.png)
+<div align="center">
+    <img src="images/app_list.png" width="260" height="520"/>
+    <img src="images/target_app.png" width="260" height="520"/>
+    <img src="images/signature_info.png" width="260" height="520"/>
+</div>
 
 ## License
 
