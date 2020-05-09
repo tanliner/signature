@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Signature</string>
+    <string name="app_search_hint">输入应用名字</string>
+    <string name="app_pkg_info_got">已获取应用详情</string>
+    <string name="app_target_name">应用名:"%1$s"</string>
+    <string name="app_package">包名:"%1$s"</string>
+    <string name="app_version">版本信息, 版本号: "%1$d", 名称:"%2$s"</string>
+    <string name="app_signature">签名:"%1$s"</string>
+    <string name="app_signature_md5">MD5</string>
+    <string name="app_signature_sha1">SHA1</string>
+    <string name="app_signature_sha256">SHA256</string>
+    <string name="app_signature_copy">复制签名</string>
+    <string name="app_package_copy">复制包名</string>
+    <string name="app_checkbox_upper">签名大写</string>
+</resources>

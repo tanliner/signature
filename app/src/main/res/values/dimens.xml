@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_item_offset_h">16dp</dimen>
+    <dimen name="app_item_offset_v">8dp</dimen>
+    <dimen name="app_search_edit_height">48dp</dimen>
+</resources>
