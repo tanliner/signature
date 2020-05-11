@@ -27,6 +27,8 @@ class AppDetailActivity : BaseActivity() {
 
     companion object {
         const val TAG = "Sf/AppDetail"
+        const val ARG_PKG = "arg_package_name"
+        const val ARG_LABEL = "arg_app_label"
     }
 
     @BindView(R.id.tv_app_pkg)
@@ -74,8 +76,8 @@ class AppDetailActivity : BaseActivity() {
         if (intent == null) {
             return
         }
-        targetPackage = intent.getStringExtra("pkg") ?: ""
-        targetLabel = intent.getStringExtra("label") ?: ""
+        targetPackage = intent.getStringExtra(ARG_PKG) ?: ""
+        targetLabel = intent.getStringExtra(ARG_LABEL) ?: ""
     }
 
     private fun setCustomActionBar() {

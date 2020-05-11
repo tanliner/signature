@@ -33,6 +33,7 @@ class MainActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "Sf"
+        private const val APP_EXIT_GAP = 2000
     }
 
     @BindView(R2.id.rv_app_list)
@@ -48,6 +49,9 @@ class MainActivity : BaseActivity() {
 
     private var editHeight: Int = 0
     private var totalScroll = 0F
+
+    private var backClickTime: Long = 0
+    private var mCurString = ""
 
     override fun init(savedInstanceState: Bundle?) {
         initEditor()
@@ -67,14 +71,7 @@ class MainActivity : BaseActivity() {
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { str: CharSequence ->
-                    mItems.clear()
-                    appBinder.setKeyword(str.toString())
-                    if (!TextUtils.isEmpty(str)) {
-                        mItems.addAll(filter(mItemsBackup, str.toString()))
-                    } else {
-                        mItems.addAll(mItemsBackup)
-                    }
-                    mAdapter.notifyDataSetChanged()
+                    search(str.toString())
                 }
         )
 
@@ -109,8 +106,8 @@ class MainActivity : BaseActivity() {
                     return
                 }
                 val intent = Intent(this@MainActivity, AppDetailActivity::class.java)
-                intent.putExtra("pkg", obj.pkg)
-                intent.putExtra("label", obj.appLabel)
+                intent.putExtra(AppDetailActivity.ARG_PKG, obj.pkg)
+                intent.putExtra(AppDetailActivity.ARG_LABEL, obj.appLabel)
                 startActivity(intent)
             }
         })
@@ -171,21 +168,6 @@ class MainActivity : BaseActivity() {
             val label = app.loadLabel(pm).toString()
             apps.add(AppInfo(app.packageName, label, icon))
         }
-
-        // var tarCtx: Context?
-        // try {
-        //     tarCtx = ctx.createPackageContext(
-        //         app.packageName, Context.CONTEXT_IGNORE_SECURITY.or(Context.CONTEXT_RESTRICTED)
-        //     )
-        //
-        //     label = tarCtx.getString(app.labelRes)
-        //     icon = tarCtx.getDrawable(app.icon)
-        //     // Log.d(TAG, "test apps pkg name=${app.packageName}, app label=${label} app icon=${icon}")
-        // } catch (e: Exception) {
-        //     Log.w(TAG, "this apps not found ${app.packageName}, e=$e")
-        //     continue
-        // }
-        // apps.add(AppInfo(label, icon))
         return apps
     }
 
@@ -200,5 +182,33 @@ class MainActivity : BaseActivity() {
             }
         }
         return ret
+    }
+
+    private fun search(str: kotlin.String) {
+        mCurString = str
+        mItems.clear()
+        appBinder.setKeyword(str)
+        if (!TextUtils.isEmpty(str)) {
+            mItems.addAll(filter(mItemsBackup, str))
+        } else {
+            mItems.addAll(mItemsBackup)
+        }
+        mAdapter.notifyDataSetChanged()
+    }
+
+    override fun onBackPressed() {
+        // exit edit mode
+        if (!TextUtils.isEmpty(mCurString)) {
+            searchEdit.setText("")
+            return
+        }
+        val now = System.currentTimeMillis()
+        if (backClickTime == 0L || now - backClickTime > APP_EXIT_GAP) {
+            backClickTime = now
+            toastShort(getString(R.string.app_exit_tips))
+            return
+        }
+        backClickTime = now
+        super.onBackPressed()
     }
 }
