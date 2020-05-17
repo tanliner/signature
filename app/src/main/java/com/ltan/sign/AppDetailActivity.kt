@@ -41,10 +41,10 @@ class AppDetailActivity : BaseActivity() {
     lateinit var appSignatureTv: TextView
 
     @BindView(R.id.tv_app_signature_copy)
-    lateinit var signatureCopyBtn: Button
+    lateinit var signatureCopyBtn: TextView
 
     @BindView(R.id.tv_app_package_copy)
-    lateinit var packageCopyBtn: Button
+    lateinit var packageCopyBtn: TextView
 
     @BindView(R.id.cbx_upper_case)
     lateinit var upperCaseCbx: CheckBox

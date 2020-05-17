@@ -80,23 +80,27 @@
             android:checked="true"
             android:text="@string/app_checkbox_upper" />
 
-        <Button
+        <TextView
             android:id="@+id/tv_app_signature_copy"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:text="@string/app_signature_copy" />
+            android:text="@string/app_signature_copy"
+            android:textColor="@android:color/white" />
 
-        <Button
+        <TextView
             android:id="@+id/tv_app_package_copy"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:text="@string/app_package_copy" />
+            android:text="@string/app_package_copy"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>
