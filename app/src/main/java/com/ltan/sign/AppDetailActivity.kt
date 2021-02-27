@@ -4,6 +4,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +52,9 @@ class AppDetailActivity : BaseActivity() {
     @BindView(R.id.cbx_upper_case)
     lateinit var upperCaseCbx: CheckBox
 
+    @BindView(R.id.cbx_with_colon)
+    lateinit var withColonCbx: CheckBox
+
     @BindView(R.id.rg_signature_type)
     lateinit var radioGroup: RadioGroup
 
@@ -57,6 +63,8 @@ class AppDetailActivity : BaseActivity() {
     private lateinit var targetPackage: String
 
     private var isSignUpperCase = true
+    private var signWithColon = true
+    private var type = "MD5"
 
     override fun contentLayout(): Int {
         return R.layout.activity_detail
@@ -114,7 +122,6 @@ class AppDetailActivity : BaseActivity() {
 
     private fun initRadioGroup() {
         radioGroup.setOnCheckedChangeListener { group, id ->
-            var type = "MD5"
             when (id) {
                 R.id.rb_signature_md5 -> {
                     type = "MD5"
@@ -133,7 +140,11 @@ class AppDetailActivity : BaseActivity() {
     private fun initCbx() {
         upperCaseCbx.setOnCheckedChangeListener { view, isChecked ->
             isSignUpperCase = isChecked
-            appSignatureTv.text = getString(R.string.app_signature, getFixedSign())
+            appSignatureTv.text = buildSignStr(getString(R.string.app_signature, getFixedSign()))
+        }
+        withColonCbx.setOnCheckedChangeListener { view, isChecked ->
+            signWithColon = isChecked
+            getSignature(targetPackage, type)
         }
     }
 
@@ -150,10 +161,10 @@ class AppDetailActivity : BaseActivity() {
 
     private fun getSignature(pkg: String, type: String) {
         RxUtils.async({
-            AppUtil.getSignature(this, pkg, type)
+            AppUtil.getSignature(this, pkg, type, signWithColon)
         }, {
             this.signature = it
-            appSignatureTv.text = getString(R.string.app_signature, getFixedSign())
+            appSignatureTv.text = buildSignStr(getString(R.string.app_signature, getFixedSign()))
         })
     }
 
@@ -162,5 +173,15 @@ class AppDetailActivity : BaseActivity() {
             return signature.toUpperCase(Locale.US)
         }
         return signature
+    }
+
+    private fun buildSignStr(txt: String) : CharSequence {
+        val ssb = SpannableStringBuilder(txt)
+        val sizeSpan = RelativeSizeSpan(0.65F)
+        val index = txt.indexOf(':')
+        ssb.setSpan(sizeSpan, index + 1, txt.length, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val colorSpan = ForegroundColorSpan(resources.getColor(android.R.color.holo_red_dark))
+        ssb.setSpan(colorSpan,index + 1, txt.length, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return ssb
     }
 }

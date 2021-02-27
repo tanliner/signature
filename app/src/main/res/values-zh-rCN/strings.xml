@@ -12,5 +12,6 @@
     <string name="app_signature_copy">复制签名</string>
     <string name="app_package_copy">复制包名</string>
     <string name="app_checkbox_upper">签名大写</string>
+    <string name="app_checkbox_colon">冒号分割</string>
     <string name="app_exit_tips">在按一次退出</string>
 </resources>

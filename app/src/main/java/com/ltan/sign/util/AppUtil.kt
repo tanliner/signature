@@ -18,7 +18,7 @@ object AppUtil {
 
     private const val TAG = "Sign/AppUtil"
 
-    fun getSignature(context: Context?, packageName: String, type: String): String {
+    fun getSignature(context: Context?, packageName: String, type: String, withColon: Boolean = false): String {
         var tmp = ""
         if (context == null) {
             return tmp
@@ -26,7 +26,7 @@ object AppUtil {
 
         val signs = getSignatures(context, packageName) ?: return tmp
         for (sig in signs) {
-            tmp = getSignatureString(sig, type)
+            tmp = getSignatureString(sig, type, withColon)
         }
         return tmp
     }
@@ -41,7 +41,7 @@ object AppUtil {
         return null
     }
 
-    private fun getSignatureString(sign: Signature, type: String): String {
+    private fun getSignatureString(sign: Signature, type: String, withColon: Boolean = false): String {
         val hexBytes = sign.toByteArray()
         var fingerprint = "error!"
         try {
@@ -56,6 +56,12 @@ object AppUtil {
                     sb.append("0")
                 }
                 sb.append(s)
+                if (withColon) {
+                    sb.append(':')
+                }
+            }
+            if (withColon) {
+                sb.deleteCharAt(sb.length - 1)
             }
             fingerprint = sb.toString()
         } catch (e: NoSuchAlgorithmException) {
