@@ -14,4 +14,6 @@
     <string name="app_checkbox_upper">签名大写</string>
     <string name="app_checkbox_colon">冒号分割</string>
     <string name="app_exit_tips">在按一次退出</string>
+    <string name="app_signature_copied">已复制签名信息</string>
+    <string name="app_pkg_name_copied">已复应用包名</string>
 </resources>

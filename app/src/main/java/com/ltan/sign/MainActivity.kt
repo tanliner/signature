@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +19,7 @@ import com.ltan.sign.binder.AppInfoBinder
 import com.ltan.sign.binder.HeaderBinder
 import com.ltan.sign.binder.ItemClickListener
 import com.ltan.sign.decoration.HorizontalLine
+import com.ltan.sign.util.LogUtil
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableEmitter
@@ -27,7 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.drakeet.multitype.MultiTypeAdapter
 import java.util.concurrent.TimeUnit
-import kotlin.String as String1
+import kotlin.String as KString
 
 class MainActivity : BaseActivity() {
 
@@ -87,7 +87,7 @@ class MainActivity : BaseActivity() {
     private fun initRecycler() {
         appBinder = AppInfoBinder()
         mAdapter.register(AppInfo::class.java, appBinder)
-        mAdapter.register(String1::class.java, HeaderBinder())
+        mAdapter.register(KString::class.java, HeaderBinder())
 
         mAdapter.items = mItems
         appListRv.adapter = mAdapter
@@ -143,7 +143,7 @@ class MainActivity : BaseActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                Log.w(TAG, "get the bg result ${it.size}")
+                LogUtil.w(TAG, "get the bg result ${it.size}")
                 dismissDialog()
                 mItems.clear()
                 // mItems.add("header")
@@ -163,7 +163,7 @@ class MainActivity : BaseActivity() {
         val apps = ArrayList<AppInfo>()
         for (app in appInfos) {
 
-            Log.v(TAG, "handleApp ${app.packageName}")
+            LogUtil.v(TAG, "handleApp ${app.packageName}")
             val icon: Drawable? = app.loadIcon(pm)
             val label = app.loadLabel(pm).toString()
             apps.add(AppInfo(app.packageName, label, icon))
@@ -171,20 +171,20 @@ class MainActivity : BaseActivity() {
         return apps
     }
 
-    private fun filter(source: ArrayList<Any>, key: String1): ArrayList<AppInfo> {
+    private fun filter(source: ArrayList<Any>, key: KString): ArrayList<AppInfo> {
         val ret = ArrayList<AppInfo>()
         for (appInfo in source) {
             if (appInfo !is AppInfo) {
                 continue
             }
-            if (appInfo.appLabel.contains(key)) {
+            if (appInfo.appLabel.contains(key, ignoreCase = true)) {
                 ret.add(appInfo)
             }
         }
         return ret
     }
 
-    private fun search(str: kotlin.String) {
+    private fun search(str: KString) {
         mCurString = str
         mItems.clear()
         appBinder.setKeyword(str)

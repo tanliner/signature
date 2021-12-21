@@ -14,4 +14,6 @@
     <string name="app_checkbox_upper">Upper Case</string>
     <string name="app_checkbox_colon">With colon</string>
     <string name="app_exit_tips">Press again to exit</string>
+    <string name="app_signature_copied">signature info copied</string>
+    <string name="app_pkg_name_copied">package name copied</string>
 </resources>

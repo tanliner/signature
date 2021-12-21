@@ -10,7 +10,6 @@ import android.text.style.RelativeSizeSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -111,12 +110,12 @@ class AppDetailActivity : BaseActivity() {
         signatureCopyBtn.setOnClickListener {
             val clipData = ClipData.newPlainText("sign", getFixedSign())
             cm.setPrimaryClip(clipData)
-            toastShort("已复制签名信息")
+            toastShort(resources.getString(R.string.app_signature_copied))
         }
         packageCopyBtn.setOnClickListener {
             val clipData = ClipData.newPlainText("pkg", targetPackage)
             cm.setPrimaryClip(clipData)
-            toastShort("已复应用包名")
+            toastShort(resources.getString(R.string.app_pkg_name_copied))
         }
     }
 

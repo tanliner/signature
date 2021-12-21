@@ -3,7 +3,6 @@ package com.ltan.sign.util
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.Signature
-import android.util.Log
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -36,7 +35,7 @@ object AppUtil {
             val packageInfo = context.packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
             return packageInfo.signatures
         } catch (e: PackageManager.NameNotFoundException) {
-            Log.e(TAG, "getSignatures e:$e")
+            LogUtil.e(TAG, "getSignatures e:$e")
         }
         return null
     }
@@ -65,7 +64,7 @@ object AppUtil {
             }
             fingerprint = sb.toString()
         } catch (e: NoSuchAlgorithmException) {
-            Log.e(TAG, "getSignatureString $e")
+            LogUtil.e(TAG, "getSignatureString $e")
         }
         return fingerprint
     }

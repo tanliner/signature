@@ -39,13 +39,13 @@ class HighLightBuilder {
         if (TextUtils.isEmpty(str) || TextUtils.isEmpty(keyword)) {
             return str
         }
-        if (!str.contains(keyword)) {
+        if (!str.contains(keyword, ignoreCase = true)) {
             return str
         }
         spanBuilder.clear()
         spanBuilder.append(str)
         val charaStyle: CharacterStyle = ForegroundColorSpan(color)
-        val start = str.indexOf(keyword)
+        val start = str.indexOf(keyword, ignoreCase = true)
         val end = start + keyword.length
         spanBuilder.setSpan(charaStyle, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return spanBuilder

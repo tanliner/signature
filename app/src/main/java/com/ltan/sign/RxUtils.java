@@ -1,10 +1,8 @@
 package com.ltan.sign;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.util.Log;
 
-import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.ltan.sign.util.LogUtil;
 
 import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
@@ -85,7 +83,7 @@ public class RxUtils {
                 // .compose(RxUtils.bindToLifecycle(view))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(main::doOnMain, e -> Log.e("rxUtil", e + ""));
+                .subscribe(main::doOnMain, e -> LogUtil.INSTANCE.e("rxUtil", e + "", e.getCause()));
     }
 
     @SuppressLint("CheckResult")
@@ -102,7 +100,7 @@ public class RxUtils {
         })
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(main::doOnMain, e -> Log.e("rxUtil", e + ""));
+                .subscribe(main::doOnMain, e -> LogUtil.INSTANCE.e("rxUtil", e + "", e.getCause()));
     }
 
     public interface Work<T> {

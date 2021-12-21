@@ -33,7 +33,7 @@ class AppInfoBinder : ItemViewBinder<AppInfo, AppInfoBinder.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, appInfo: AppInfo) {
         holder.iconIv.setImageDrawable(appInfo.appIcon)
         holder.labelTv.text = HighLightBuilder()
-            .setStr(appInfo.appLabel.toString())
+            .setStr(appInfo.appLabel)
             .setKeyword(mKeywords)
             .setColor(Color.RED)
             .build()

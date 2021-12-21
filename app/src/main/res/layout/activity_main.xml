@@ -21,6 +21,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_app_list"
         android:layout_width="match_parent"
-        android:layout_below="@id/ed_app_search"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/ed_app_search" />
 </RelativeLayout>
